@@ -3,10 +3,17 @@ kind: Deployment
 metadata:
   name: app
   namespace: argo
+  labels:
+    app: argo
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: argo
   template:
     metadata:
+      labels:
+        app: argo
     spec:
       containers:
       - name: app
@@ -20,6 +27,8 @@ kind: Service
 metadata:
   name: app
   namespace: argo
+  labels:
+    app: argo
 spec:
   type: NodePort
   ports:
@@ -27,3 +36,5 @@ spec:
     port: 8080
     nodePort: 30030
     name: http
+  selector:
+    app: argo
